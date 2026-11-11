@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ead8c2">
+<meta name="description" content="Edição especial do amor de Rebeca e Gustavo. Abra o envelope e escute a notícia de última hora.">
+<title>O Amor É Notícia — Rebeca & Gustavo</title>
+<style>
+:root{--cream:#ecdcc7;--ink:#2b2016;--gold:#bc9457;--line:rgba(85,66,49,.33)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:#e9d7bf}
+body{margin:0;background:#e9d7bf;color:var(--ink);font-family:Georgia,'Times New Roman',serif;overflow-x:hidden}
+body:not(.is-open){overflow:hidden;height:100svh}
+button,a{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer;font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #9a7244;outline-offset:2px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Intro is composed entirely of UNMODIFIED envelope PNG/JPG and independent animation effects. */
+.scene{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;z-index:50;isolation:isolate;background:radial-gradient(ellipse at 50% 35%,#fff3e0 0%,#ead8c4 60%,#d8bfa4 110%);transition:opacity .72s ease, visibility .72s}
+.scene:before{content:"";position:absolute;inset:-35px;background:url('assets/envelope_original.jpg') center/cover;filter:blur(26px) brightness(1.03) saturate(.63);opacity:.26;z-index:-1}
+.scene:after{content:"";pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0px,rgba(78,53,25,.009) 1px,transparent 3px);z-index:9}
+.scene .edition-top{position:absolute;top:calc(22px + env(safe-area-inset-top));color:#725941;font:600 10px Arial,sans-serif;letter-spacing:.24em;text-transform:uppercase;text-align:center;z-index:6;opacity:.74;transition:opacity .35s;pointer-events:none}
+.envelope-btn{position:relative;z-index:4;display:block;border:none;background:transparent;padding:0;width:min(100vw,calc(100svh * 1175 / 2048),580px);aspect-ratio:1175 / 2048;max-height:100svh;filter:drop-shadow(0 18px 30px rgba(48,34,23,.19));transform-origin:50% 53%;transform-style:preserve-3d;transition:transform 1100ms cubic-bezier(.23,.82,.23,1),opacity 650ms ease, filter 1200ms ease;user-select:none}
+.envelope-btn img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+/* 100% optical overlay around the existing seal: never redraws the original art. */
+.seal-focus{position:absolute;left:50%;top:51.2%;width:23%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(178,137,80,.24);box-shadow:0 0 0 2px rgba(244,222,163,.035);animation:sealBreath 2600ms infinite ease-in-out;pointer-events:none}
+.seal-focus:after{content:"";position:absolute;inset:-6px;border:1px dashed rgba(164,116,61,.32);border-radius:50%;animation:slowSpin 18s linear infinite}
+@keyframes sealBreath{0%,100%{box-shadow:0 0 0 0 rgba(201,161,97,.1)}50%{box-shadow:0 0 0 13px rgba(185,145,92,0)}}
+@keyframes slowSpin{to{transform:rotate(360deg)}}
+.tip{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:7;padding:12px 19px;border:1px solid #bea58090;background:#fff0dbeb;border-radius:99px;box-shadow:0 8px 30px #6e4c342c;color:#665139;font:700 10px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;animation:riseTip 1700ms ease both;transition:opacity .3s}
+@keyframes riseTip{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+/* Gold seal burst. It's placed in the SAME image-relative space as the seal. */
+.burst{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0}
+.burst .ring{position:absolute;left:50%;top:51.2%;width:19%;aspect-ratio:1;border:2px solid rgba(227,194,125,.7);border-radius:50%;transform:translate(-50%,-50%) scale(.6);box-shadow:0 0 18px 5px #dfb56852;opacity:0}
+.burst .ring:nth-child(2){border:1px solid rgba(142,99,44,.48)}
+.particle{position:absolute;left:50%;top:51.2%;width:var(--size);height:var(--size);transform:translate(-50%,-50%);border-radius:50%;opacity:0;background:var(--particleColor);box-shadow:0 0 6px #fff1cc88}
+body.phase-seal .burst{opacity:1}
+body.phase-seal .ring:nth-child(1){animation:ringOut 890ms ease-out forwards}
+body.phase-seal .ring:nth-child(2){animation:ringOut 1000ms 150ms ease-out forwards}
+body.phase-seal .particle{animation:sparkOut 1000ms var(--delay) ease-out forwards}
+@keyframes ringOut{0%{opacity:.9;transform:translate(-50%,-50%) scale(.72)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.8)}}
+@keyframes sparkOut{0%{opacity:0;transform:translate(-50%,-50%) translate(0,0) scale(.5)}22%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.1)}}
+body.phase-seal .seal-focus{animation:none;border-color:#f4dca2;box-shadow:0 0 33px 9px #f4dca27a}
+body.phase-swing .envelope-btn{transform:perspective(1100px) rotateY(-11deg) rotateZ(-5deg) translate3d(-7vw,13vh,0) scale(.84);filter:drop-shadow(0 35px 35px #523b2854)}
+body.phase-rise .envelope-btn{transform:perspective(1100px) rotateY(13deg) rotateZ(9deg) translate3d(27vw,33vh,0) scale(.65);opacity:.26;filter:blur(2px) drop-shadow(0 8px 35px #523b2854)}
+body.phase-unfold .envelope-btn{transform:translate3d(35vw,58vh,0) rotate(17deg) scale(.55);opacity:0}
+body.animating .tip{animation:none;opacity:0}body.animating .edition-top{opacity:0}
+/* Two-fold printed news sheet: the original newspaper is used as the printed face. */
+.newspaper-fold{position:absolute;left:50%;top:50%;z-index:3;width:min(80vw,390px);height:min(68svh,510px);max-width:92vw;transform:translate(-50%,-50%) translateY(64vh) scale(.48) rotate(-12deg) rotateX(35deg);transform-style:preserve-3d;perspective:1050px;opacity:0;filter:drop-shadow(0 18px 30px #25170950);transition:transform 1050ms cubic-bezier(.13,.94,.21,1),opacity 400ms ease, filter 800ms ease;pointer-events:none}
+.newspaper-fold .fold-inner{position:absolute;inset:0;display:flex;transform-style:preserve-3d}
+.newspaper-fold .leaf{height:100%;width:50%;background-image:url('assets/jornal_original.png');background-size:200% auto;background-repeat:no-repeat;box-shadow:inset 0 0 1px #704a2922}
+.newspaper-fold .leaf-left{background-position:left top;box-shadow:-8px 10px 21px #37211125,inset -15px 0 15px #311d0d1b}
+.newspaper-fold .leaf-right{background-position:right top;transform-origin:left center;transform:rotateY(-146deg);backface-visibility:hidden;box-shadow:8px 10px 21px #37211136,inset 16px 0 17px #281b1333;transition:transform 890ms cubic-bezier(.21,1,.2,1),box-shadow 890ms}
+.newspaper-fold .book-spine{position:absolute;z-index:3;top:0;bottom:0;left:50%;width:1px;background:#a481646e;box-shadow:0 0 12px #6d543f88;opacity:1;transition:opacity .5s}
+body.phase-rise .newspaper-fold,body.phase-unfold .newspaper-fold{opacity:1;transform:translate(-50%,-50%) translateY(-1vh) scale(.86) rotate(-3deg) rotateX(12deg)}
+body.phase-unfold .newspaper-fold{transform:translate(-50%,-50%) translateY(-6vh) scale(1.04) rotate(0deg) rotateX(0deg)}
+body.phase-unfold .leaf-right{transform:rotateY(0deg);box-shadow:5px 4px 22px #33241420}
+body.phase-unfold .book-spine{opacity:.18}
+body.phase-reveal .newspaper-fold{transform:translate(-50%,-50%) translateY(6vh) scale(1.22);opacity:0;filter:blur(5px)}
+/* Ink stamp: appears briefly with fold, then disappears before full newspaper. */
+.stamp{position:absolute;left:50%;top:calc(4.5vh + env(safe-area-inset-top));transform:translateX(-50%) rotate(-8deg) scale(1.25);font:700 clamp(10px,3.3vw,15px) Georgia,serif;letter-spacing:.24em;color:#7b4b32;border:2px double #956b4e;padding:10px 16px;background:#f6dfc97d;text-transform:uppercase;white-space:nowrap;z-index:6;opacity:0;pointer-events:none;transition:opacity .35s ease,transform 460ms cubic-bezier(.16,1.8,.4,1)}
+body.phase-unfold .stamp{transform:translateX(-50%) rotate(-7deg) scale(1);opacity:1}
+body.phase-reveal .stamp{opacity:0}
+body.phase-reveal .scene{opacity:0;pointer-events:none}
+body.is-open .scene{opacity:0;visibility:hidden;pointer-events:none}
+/* Main newspaper is always the exact ORIGINAL PNG; no cuts, image regeneration, or text replacement. */
+.paper-area{position:relative;z-index:1;min-height:100svh;pointer-events:none;opacity:0;transform:translateY(13vh) scale(.985);filter:blur(8px);transition:opacity 1s cubic-bezier(.22,.8,.25,1), transform 1350ms cubic-bezier(.2,.9,.24,1),filter 900ms ease}
+body.phase-reveal .paper-area,body.is-open .paper-area{opacity:1;transform:none;filter:none;pointer-events:auto}
+.paper-head{min-height:46px;background:#ecdec8;border-bottom:1px solid #937b583d;display:flex;align-items:center;justify-content:space-between;padding:6px max(14px,calc((100vw - 568px)/2));font:700 10px Arial,sans-serif;color:#6c553e;letter-spacing:.13em}
+.paper-head button{background:transparent;border:0;color:#6c553e;font:700 10px Arial,sans-serif;letter-spacing:.04em;padding:8px}
+.paper-wrap{margin:0 auto;max-width:568px;position:relative;box-shadow:0 10px 50px #49332131;background:#eadbc6}
+.paper-wrap>img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
+/* Invisible clickable areas sit over exact printed text. */
+.hotlink{position:absolute;left:3.8%;width:92.4%;height:2.25%;border-radius:2px;z-index:2}
+.hotlink:hover,.hotlink:focus-visible{background:#b39b7121}
+.radio-hit{position:absolute;left:11%;top:10.65%;height:2.4%;width:10.5%;min-height:39px;min-width:39px;border-radius:50%;border:0;background:transparent;z-index:3;display:grid;place-items:center;color:#fff}
+.radio-hit:after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid #b7965d55;animation:sealBreath 2.4s ease-in-out infinite;pointer-events:none}
+.radio-hit.playing{background:rgba(14,17,17,.90)}
+.radio-hit .pause-bars{display:none;position:relative;width:18px;height:22px;border-left:5px solid #fff;border-right:5px solid #fff}
+.radio-hit.playing .pause-bars{display:block}
+.radio-hit.playing:after{animation:radioPulse 1.2s ease-in-out infinite}
+@keyframes radioPulse{50%{transform:scale(1.16);border-color:#bb995f}}
+.onair{position:absolute;left:28%;top:10.4%;pointer-events:none;z-index:2;display:flex;align-items:center;gap:7px;opacity:0;transform:translateY(7px);background:#281f19e6;color:#fff1d3;padding:6px 10px;border-radius:3px;font:700 9px Arial,sans-serif;letter-spacing:.15em;transition:opacity .25s,transform .25s}
+.onair.on{opacity:1;transform:none}
+.eq{display:flex;align-items:center;gap:2px;height:12px}.eq b{display:block;width:2px;height:5px;background:#e3c186;animation:eq 550ms ease-in-out infinite alternate}.eq b:nth-child(2){animation-delay:130ms}.eq b:nth-child(3){animation-delay:230ms}.eq b:nth-child(4){animation-delay:330ms}
+@keyframes eq{from{height:3px}to{height:12px}}
+.reading-note{font:400 11px/1.7 Arial,sans-serif;color:#624d37;letter-spacing:.07em;text-align:center;padding:21px 10px 50px;background:#ecdcc6;border-top:1px solid #a88e6755}
+.reading-note button{margin:9px auto 0;display:block;border:1px solid #a88e67;border-radius:100px;background:transparent;padding:10px 18px;font:700 10px Arial,sans-serif;letter-spacing:.09em;color:#695139}
+/* Audio starts only on explicit user tap. */
+.audio-controls{position:fixed;z-index:90;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));width:min(95vw,480px);padding:12px;background:rgba(247,236,220,.97);border:1px solid #a89171;border-radius:14px;box-shadow:0 12px 50px #20170f66;backdrop-filter:blur(17px);transform:translate(-50%,130%);opacity:0;transition:transform .4s cubic-bezier(.2,1,.3,1),opacity .35s ease;display:flex;align-items:center;gap:10px}
+.audio-controls.visible{transform:translate(-50%,0);opacity:1}
+.audio-controls button{border:0;background:transparent;color:#4e3929}
+.audio-controls .play-toggle{display:grid;place-items:center;border:1px solid #9a805f;border-radius:50%;flex:0 0 40px;height:40px;font-size:20px}
+.track{flex:1;min-width:0}.track-title{font:700 10px/1.3 Arial,sans-serif;text-transform:uppercase;letter-spacing:.11em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-sub{margin-top:2px;color:#725c44;font:400 10px Arial,sans-serif}.track input{accent-color:#936c3e;width:100%;height:13px;margin:8px 0 0;cursor:pointer}.track-time{align-self:center;font:500 10px Arial,sans-serif;white-space:nowrap;color:#66513d}.close-audio{align-self:start;font-size:20px;line-height:1}
+@media(max-width:560px){.paper-head{min-height:38px;padding:6px 8px;font-size:9px}.paper-head button{font-size:9px}.paper-wrap{box-shadow:none}.stamp{top:4.5vh}.tip{font-size:9px}.edition-top{font-size:9px}.onair{left:28%;top:10.4%;font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style></head><body>
+<section class="scene" id="scene" aria-label="Envelope do convite">
+ <div class="edition-top">EDIÇÃO EXTRAORDINÁRIA · 2027</div>
+ <div class="newspaper-fold" aria-hidden="true"><div class="fold-inner"><div class="leaf leaf-left"></div><div class="leaf leaf-right"></div><div class="book-spine"></div></div></div>
+ <button class="envelope-btn" id="open" type="button" aria-label="Abrir o convite de casamento de Rebeca e Gustavo" aria-expanded="false">
+  <img src="assets/envelope_original.jpg" alt="Envelope vintage original, com o título O Amor É Notícia e lacre dourado">
+  <span class="seal-focus" aria-hidden="true"></span>
+  <span class="burst" id="burst" aria-hidden="true"><i class="ring"></i><i class="ring"></i></span>
+ </button>
+ <div class="stamp" aria-hidden="true">EDIÇÃO EXTRA · 19.09.2027</div>
+ <div class="tip" id="tip" aria-hidden="true">TOQUE NO LACRE PARA ABRIR</div>
+</section>
+<main class="paper-area" id="paper" aria-label="Jornal do casamento">
+ <header class="paper-head"><span>PLANTÃO DO AMOR · Nº 001</span><button type="button" id="replay">↻ VER ABERTURA</button></header>
+ <div class="paper-wrap" id="paperWrap">
+   <img src="assets/jornal_original.png" alt="Jornal original do casamento de Rebeca e Gustavo, 19 de setembro de 2027 às 19h30. Fotos do casal e informações de confirmação de presença">
+   <button id="radioHit" class="radio-hit" type="button" aria-label="Reproduzir a notícia no rádio" aria-pressed="false"><span class="pause-bars" aria-hidden="true"></span></button>
+   <div class="onair" id="onair" aria-hidden="true"><span class="eq"><b></b><b></b><b></b><b></b></span>NO AR</div>
+   <a class="hotlink" href="https://maps.app.goo.gl/vKmzu7Uq277GHSAu9" target="_blank" rel="noopener noreferrer" style="top:70.9%" aria-label="Abrir Cerimônia" title="Cerimônia"></a>
+<a class="hotlink" href="https://maps.app.goo.gl/TrLthVEM29a3uonm7" target="_blank" rel="noopener noreferrer" style="top:73.4%" aria-label="Abrir Recepção" title="Recepção"></a>
+<a class="hotlink" href="https://noivos.casar.com/radyne-e-davi" target="_blank" rel="noopener noreferrer" style="top:75.8%" aria-label="Abrir Confirmação de presença" title="Confirmação de presença"></a>
+<a class="hotlink" href="https://www.canva.com/design/DAG3vDXNeRs/_XOm7z8rHQhbprIahoskcA/edit" target="_blank" rel="noopener noreferrer" style="top:78.0%" aria-label="Abrir Manual de convidados" title="Manual de convidados"></a>
+ </div>
+ <footer class="reading-note">EDIÇÃO ESPECIAL · REBECA &amp; GUSTAVO<button type="button" id="top">↑ VOLTAR AO TOPO DO JORNAL</button></footer>
+</main>
+<audio id="audio" preload="metadata" src="assets/narracao_original.mp3"></audio>
+<div class="audio-controls" id="controls" role="region" aria-label="Controles da narração do rádio">
+ <button class="play-toggle" id="playToggle" type="button" aria-label="Pausar áudio">Ⅱ</button>
+ <div class="track"><div class="track-title">PLANTÃO DO AMOR · REBECA &amp; GUSTAVO</div><div class="track-sub" id="trackStatus">Notícia especial</div><input type="range" id="seek" min="0" max="1000" value="0" aria-label="Progresso do áudio"></div>
+ <span class="track-time" id="time">0:00</span><button class="close-audio" id="close" type="button" aria-label="Ocultar controles">×</button>
+</div>
+<script>
+(()=>{'use strict';
+ const body=document.body;
+ const open=document.getElementById('open'),burst=document.getElementById('burst'),radio=document.getElementById('radioHit');
+ const audio=document.getElementById('audio'),controls=document.getElementById('controls'),playToggle=document.getElementById('playToggle');
+ const status=document.getElementById('trackStatus'),seek=document.getElementById('seek'),clock=document.getElementById('time'),onair=document.getElementById('onair');
+ let transitionHandles=[],transitioning=false;
+ function delay(fn,ms){let t=window.setTimeout(fn,ms);transitionHandles.push(t)}
+ function stopTimers(){transitionHandles.forEach(clearTimeout);transitionHandles=[]}
+ function makeSparks(){burst.querySelectorAll('.particle').forEach(el=>el.remove());for(let i=0;i<22;i++){
+  const a=(i/22)*Math.PI*2;const r=45+(i%6)*15;const p=document.createElement('i');p.className='particle';
+  p.style.setProperty('--dx',Math.cos(a)*r+'px');p.style.setProperty('--dy',Math.sin(a)*r+'px');
+  p.style.setProperty('--size',2+(i%4)+'px');p.style.setProperty('--delay',(i%5)*35+'ms');
+  p.style.setProperty('--particleColor',i%4===0?'#fff6ce':'#c99851');burst.appendChild(p);
+ }}
+ function openScene(){if(transitioning||body.classList.contains('is-open'))return;transitioning=true;makeSparks();
+  window.scrollTo(0,0);body.classList.add('animating','phase-seal');
+  delay(()=>body.classList.add('phase-swing'),360);
+  delay(()=>body.classList.add('phase-rise'),980);
+  delay(()=>body.classList.add('phase-unfold'),1670);
+  delay(()=>body.classList.add('phase-reveal'),2750);
+  delay(()=>{body.classList.add('is-open');transitioning=false;open.setAttribute('aria-expanded','true')},3550);
+ }
+ function resetScene(){stopTimers();transitioning=false;audio.pause();controls.classList.remove('visible');
+  body.classList.remove('animating','phase-seal','phase-swing','phase-rise','phase-unfold','phase-reveal','is-open');
+  open.setAttribute('aria-expanded','false');window.scrollTo({top:0,behavior:'instant'});}
+ open.addEventListener('click',openScene);
+ document.getElementById('replay').addEventListener('click',resetScene);
+ document.getElementById('top').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+ function fmt(s){if(!Number.isFinite(s))return '0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')}
+ function sync(){let isPlaying=!audio.paused&&!audio.ended;radio.classList.toggle('playing',isPlaying);onair.classList.toggle('on',isPlaying);
+  radio.setAttribute('aria-pressed',String(isPlaying));radio.setAttribute('aria-label',isPlaying?'Pausar notícia':'Reproduzir notícia no rádio');
+  playToggle.textContent=isPlaying?'Ⅱ':'▶';playToggle.setAttribute('aria-label',isPlaying?'Pausar áudio':'Reproduzir áudio');
+  status.textContent=audio.ended?'A notícia terminou':isPlaying?'No ar · Narração original':'Notícia pausada';}
+ function toggle(){controls.classList.add('visible');if(!audio.paused){audio.pause();sync();return;}
+  if(audio.ended)audio.currentTime=0;
+  audio.play().then(sync).catch(()=>{status.textContent='O navegador não pôde reproduzir o áudio';sync()});}
+ radio.addEventListener('click',toggle);playToggle.addEventListener('click',toggle);
+ document.getElementById('close').addEventListener('click',()=>controls.classList.remove('visible'));
+ for(const event of ['play','pause','ended'])audio.addEventListener(event,sync);
+ audio.addEventListener('loadedmetadata',()=>clock.textContent='0:00 / '+fmt(audio.duration));
+ audio.addEventListener('timeupdate',()=>{if(audio.duration&& !seek.matches(':active'))seek.value=String(Math.round(audio.currentTime/audio.duration*1000));clock.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)});
+ seek.addEventListener('input',()=>{if(audio.duration)audio.currentTime=audio.duration*Number(seek.value)/1000});
+ window.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&body.classList.contains('is-open'))resetScene()});
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  open.addEventListener('click',()=>{stopTimers();body.classList.add('phase-reveal','is-open');transitioning=false},{once:true});
+ }
+})();
+</script></body></html>
